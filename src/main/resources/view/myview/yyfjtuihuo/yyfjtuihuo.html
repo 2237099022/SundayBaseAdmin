@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<!--解决idea thymeleaf 表达式模板报红波浪线-->
+<!--suppress ALL -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 引入公用部分 -->
+    <script th:replace="common/head::static"></script>
+    <!-- 样式 -->
+    <link th:href="@{/myjscss/yyfjtuihuo/css/yyfjtuihuo.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+        <div class="layui-card-body">
+            <div class="layui-form toolbar">
+
+                <div class="layui-form-item">
+                    
+
+                    <div class="layui-inline" style="width: 100%">
+                        <button class="layui-btn layui-btn-radius" id="addOneFun">添加</button>
+                        <button class="layui-btn layui-btn-radius" id="daoRuFun">
+                            <i class="layui-icon layui-icon-upload"></i>导入数据
+                        </button>
+                        <button class="layui-btn layui-btn-radius" id="daoChuFun" style="margin: 10px">
+                            <i class="layui-icon layui-icon-download-circle"></i>导出
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+            <!--表单-->
+            <table class="layui-hide" id="yyfjtuihuo" lay-filter="yyfjtuihuo"></table>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+<!--表单-->
+<div id="addShowDiv" style="display:none; ">
+    <form class="layui-form" lay-filter="addForm" action="" id="addForm">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">id</label>
+                <div class="layui-input-block">
+                    <input type="text" name="id" id="id" placeholder="请输入id" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">订单号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dingDanHao" id="dingDanHao" placeholder="请输入订单号" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">商品</label>
+                <div class="layui-input-block">
+                    <input type="text" name="shangPin" id="shangPin" placeholder="请输入商品" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">会员编号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="bianHao" id="bianHao" placeholder="请输入会员编号" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">会员姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="xingMing" id="xingMing" placeholder="请输入会员姓名" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">会员电话</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dianHua" id="dianHua" placeholder="请输入会员电话" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">收件人姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="shouJianXingMing" id="shouJianXingMing" placeholder="请输入收件人姓名"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">收件人电话</label>
+                <div class="layui-input-block">
+                    <input type="text" name="shouJianDianHua" id="shouJianDianHua" placeholder="请输入收件人电话"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">收件地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="shouJianDiZhi" id="shouJianDiZhi" placeholder="请输入收件地址"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">商品金额</label>
+                <div class="layui-input-block">
+                    <input type="text" name="shangPinJinQian" id="shangPinJinQian" placeholder="请输入商品金额"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">订单积分</label>
+                <div class="layui-input-block">
+                    <input type="text" name="jiFen" id="jiFen" placeholder="请输入订单积分" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">运费</label>
+                <div class="layui-input-block">
+                    <input type="text" name="yunFei" id="yunFei" placeholder="请输入运费" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">总金额</label>
+                <div class="layui-input-block">
+                    <input type="text" name="zongJinQian" id="zongJinQian" placeholder="请输入总金额" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">下单时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="xiaDanTime" id="xiaDanTime" placeholder="请输入下单时间" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">付款时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="fuKuanTime" id="fuKuanTime" placeholder="请输入付款时间" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">订单状态</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dingDanZhuangTai" id="dingDanZhuangTai" placeholder="请输入订单状态"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">订单来源</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dingDanLaiYuan" id="dingDanLaiYuan" placeholder="请输入订单来源"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">专营店名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dianMingCheng" id="dianMingCheng" placeholder="请输入专营店名称"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">订单类型</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dingDanLeiXing" id="dingDanLeiXing" placeholder="请输入订单类型"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">客服</label>
+                <div class="layui-input-block">
+                    <input type="text" name="keFu" id="keFu" placeholder="请输入客服" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">结算时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="jieSuanTime" id="jieSuanTime" placeholder="请输入结算时间" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input type="text" name="beiZhu" id="beiZhu" placeholder="请输入备注" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">创建时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="createTime" id="createTime" placeholder="请输入创建时间" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">创建人</label>
+                <div class="layui-input-block">
+                    <input type="text" name="createUser" id="createUser" placeholder="请输入创建人" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">修改时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="updateTime" id="updateTime" placeholder="请输入修改时间" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">修改人</label>
+                <div class="layui-input-block">
+                    <input type="text" name="updateUser" id="updateUser" placeholder="请输入修改人" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-radius" lay-submit lay-filter="addSub">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-radius layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--头部按钮-->
+<script type="text/html" id="titleBar">
+    <input class="chaXunNone layui-input" id="id" placeholder="id" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="dingDanHao" placeholder="订单号" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="shangPin" placeholder="商品" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="bianHao" placeholder="会员编号" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="xingMing" placeholder="会员姓名" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="dianHua" placeholder="会员电话" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="shouJianXingMing" placeholder="收件人姓名" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="shouJianDianHua" placeholder="收件人电话" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="shouJianDiZhi" placeholder="收件地址" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="shangPinJinQian" placeholder="商品金额" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="jiFen" placeholder="订单积分" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="yunFei" placeholder="运费" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="zongJinQian" placeholder="总金额" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="xiaDanTime" placeholder="下单时间" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="fuKuanTime" placeholder="付款时间" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="dingDanZhuangTai" placeholder="订单状态" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="dingDanLaiYuan" placeholder="订单来源" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="dianMingCheng" placeholder="专营店名称" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="dingDanLeiXing" placeholder="订单类型" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="keFu" placeholder="客服" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="jieSuanTime" placeholder="结算时间" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="beiZhu" placeholder="备注" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="createTime" placeholder="创建时间" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="createUser" placeholder="创建人" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="updateTime" placeholder="修改时间" type="text"
+           style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="updateUser" placeholder="修改人" type="text"
+           style="display: none;width: 125px;"/>
+
+
+    <div class="layui-inline">
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius"
+                lay-event="chaXunMoreF"><i class="layui-icon">&#xe624;</i>更多查询
+        </button>
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius"
+                lay-event="chaXunLessF"><i class="layui-icon">&#xe67e;</i>隐藏查询
+        </button>
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius"
+                lay-event="chaXunChongZhiF"><i class="layui-icon">&#x1006;</i>重置
+        </button>
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" lay-event="chaXunF" ><i
+                class="layui-icon">&#xe615;</i>搜索
+        </button>
+        <!--<button class="layui-btn layui-btn-lg" lay-event="daoChuFun" style="margin: 4px;padding:0 10px;float: left;"><i class="layui-icon layui-icon-download-circle" style="font-size: 30px;"></i>   2从本地导出给配送</button>-->
+
+    </div>
+</script>
+<!--行内按钮-->
+<script type="text/html" id="rowBar">
+    <a class="layui-btn layui-btn-primary layui-border-blue layui-btn-sm layui-btn-radius" lay-event="updateOneF">修改</a>
+    <a class="layui-btn layui-btn-primary layui-border-red layui-btn-sm layui-btn-radius" lay-event="deleteOneF">删除</a>
+</script>
+<!-- js -->
+<script th:src="@{/myjscss/yyfjtuihuo/yyfjtuihuo.js}"></script>
+
+</html>
+

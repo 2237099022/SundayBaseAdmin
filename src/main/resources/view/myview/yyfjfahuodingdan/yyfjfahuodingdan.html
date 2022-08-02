@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<!--解决idea thymeleaf 表达式模板报红波浪线-->
+<!--suppress ALL -->
+<html xmlns:th="http://www.thymeleaf.org" style="height: 100%">
+<head>
+    <!-- 引入公用部分 -->
+    <script th:replace="common/head::static"></script>
+    <!-- 样式 -->
+    <link th:href="@{/myjscss/yyfjfahuodingdan/css/yyfjfahuodingdan.css}" rel="stylesheet" type="text/css"/>
+
+</head>
+
+<body style="height: 98%">
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+        <div class="layui-card-body">
+            <div class="layui-form toolbar">
+                
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-upload-drag" id="daoRuFun" style="float: left;">
+                            <i class="layui-icon layui-icon-upload" style="float: left;font-size:30px;"></i>
+                            &nbsp
+                            <p style="float: right;">1导入数据</p>
+                        </div>
+
+                        <button class="layui-btn layui-btn-lg" id="daoChuFun" style="float: left;"><i class="layui-icon layui-icon-download-circle" style="font-size: 30px;"></i>   2从本地导出给配送</button>
+
+                        <div class="layui-upload-drag" id="daoRuWuLiuFun" style="float: left;">
+                            <i class="layui-icon layui-icon-upload" style="float: left;font-size:30px;"></i>
+                            &nbsp
+                            <p style="float: right;">3导入物流单号</p>
+                        </div>
+
+                    </div>
+                    <div class="layui-inline" style="float: right">
+                        <button class="layui-btn layui-btn-lg layui-btn-radius" id="uploadQuXiaoFun">
+                            <i class="layui-icon layui-icon-upload"></i>导入取消的订单
+                        </button>
+                    </div>
+                </div>
+                <!--表单-->
+                <table class="layui-hide" id="yyfjfahuodingdan" lay-filter="yyfjfahuodingdan"></table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<div id="test" style="display:none; ">
+    <table id="shangChuanHuiXian" lay-filter="test"></table>
+    <!--<div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-radius" lay-submit lay-filter="addSub">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-radius layui-btn-primary">重置</button>
+        </div>
+    </div>-->
+</div>
+<!--表单-->
+<!--<div id="addShowDiv" style="display:none; ">
+    <form class="layui-form" lay-filter="addForm" action="" id="addForm">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">id</label>
+                <div class="layui-input-block">
+                    <input type="text" name="id" id="id" placeholder="请输入id" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">订单号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dingDanHao" id="dingDanHao" placeholder="请输入订单号" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">寄件人姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="jiJianXingMing" id="jiJianXingMing" placeholder="请输入寄件人姓名"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">寄件人手机</label>
+                <div class="layui-input-block">
+                    <input type="text" name="jiJianShouJi" id="jiJianShouJi" placeholder="请输入寄件人手机" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">寄件人座机</label>
+                <div class="layui-input-block">
+                    <input type="text" name="jiJianZuoJi" id="jiJianZuoJi" placeholder="请输入寄件人座机" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">寄件人地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="jiJianDiZhi" id="jiJianDiZhi" placeholder="请输入寄件人地址" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">收件人姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="shouJianXingMing" id="shouJianXingMing" placeholder="请输入收件人姓名"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">收件人手机</label>
+                <div class="layui-input-block">
+                    <input type="text" name="shouJianShouJi" id="shouJianShouJi" placeholder="请输入收件人手机"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">收件人座机</label>
+                <div class="layui-input-block">
+                    <input type="text" name="shouJianZuoJi" id="shouJianZuoJi" placeholder="请输入收件人座机"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">收件人地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="shouJianDiZhi" id="shouJianDiZhi" placeholder="请输入收件人地址"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">物品信息</label>
+                <div class="layui-input-block">
+                    <input type="text" name="wuPinXinXi" id="wuPinXinXi" placeholder="请输入物品信息" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">支付金额</label>
+                <div class="layui-input-block">
+                    <input type="text" name="zhiFuJinQian" id="zhiFuJinQian" placeholder="请输入支付金额" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">支付运费</label>
+                <div class="layui-input-block">
+                    <input type="text" name="zhiFuYunFei" id="zhiFuYunFei" placeholder="请输入支付运费" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">快递公司</label>
+                <div class="layui-input-block">
+                    <input type="text" name="kuaiDiGongSi" id="kuaiDiGongSi" placeholder="请输入快递公司" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">快递网点</label>
+                <div class="layui-input-block">
+                    <input type="text" name="kuaiDiWangDian" id="kuaiDiWangDian" placeholder="请输入快递网点"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">快递单号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="kuaiDiDanHao" id="kuaiDiDanHao" placeholder="请输入快递单号" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">快递费用</label>
+                <div class="layui-input-block">
+                    <input type="text" name="kuaiDiFei" id="kuaiDiFei" placeholder="请输入快递费用" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">自提完成</label>
+                <div class="layui-input-block">
+                    <input type="text" name="ziTiWanCheng" id="ziTiWanCheng" placeholder="请输入自提完成" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">发货状态</label>
+                <div class="layui-input-block">
+                    <input type="text" name="faHuoState" id="faHuoState" placeholder="请输入发货状态" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">到账状态</label>
+                <div class="layui-input-block">
+                    <input type="text" name="daoZhangState" id="daoZhangState" placeholder="请输入到账状态"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">变化记录</label>
+                <div class="layui-input-block">
+                    <input type="text" name="bianHuaJiLu" id="bianHuaJiLu" placeholder="请输入变化记录" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input type="text" name="beiZhu" id="beiZhu" placeholder="请输入备注" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">创建时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="createTime" id="createTime" placeholder="请输入创建时间" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">修改时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="updateTime" id="updateTime" placeholder="请输入修改时间" class="layui-input">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>-->
+<script type="text/html" id="titleBar">
+    <div class="layui-inline">
+        <input class="layui-input" id="dingDanHao" placeholder="订单号" type="text" style="width: 125px;"/>
+    </div>
+    <div class="layui-inline">
+        <input class="chaXunNone layui-input" id="shouJianXingMing" placeholder="收件人姓名" type="text" style="width: 125px;"/>
+    </div>
+    <input class="chaXunNone layui-input" id="id" placeholder="id" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="fuKuanTime" placeholder="付款时间" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="jiJianXingMing" placeholder="寄件人姓名" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="jiJianShouJi" placeholder="寄件人手机" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="jiJianZuoJi" placeholder="寄件人座机" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="jiJianDiZhi" placeholder="寄件人地址" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="shouJianShouJi" placeholder="收件人手机" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="shouJianZuoJi" placeholder="收件人座机" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="shouJianDiZhi" placeholder="收件人地址" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="wuPinXinXi" placeholder="物品信息" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="zhiFuJinQian" placeholder="支付金额" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="zhiFuYunFei" placeholder="支付运费" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="kuaiDiGongSi" placeholder="快递公司" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="kuaiDiWangDian" placeholder="快递网点" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="kuaiDiDanHao" placeholder="快递单号" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="kuaiDiFei" placeholder="快递费用" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="ziTiWanCheng" placeholder="自提完成" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="faHuoState" placeholder="发货状态(未发1,已发2,退货3,遗留4)" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="daoZhangState" placeholder="到账状态" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="bianHuaJiLu" placeholder="变化记录" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="beiZhu" placeholder="备注" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="createTime" placeholder="创建时间" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="updateTime" placeholder="修改时间" type="text" style="display: none;width: 125px;"/>
+
+    <div class="layui-inline">
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" lay-event="chaXunF"><i class="layui-icon">&#xe615;</i>搜索</button>
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" lay-event="chaXunChongZhiF"><i class="layui-icon">&#x1006;</i>重置</button>
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" lay-event="chaXunMoreF"><i class="layui-icon">&#xe61a;</i></button>
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" lay-event="chaXunLessF"><i class="layui-icon">&#xe619;</i></button>
+    </div>
+    
+</script>
+<script type="text/html" id="rowBar">
+
+    <a class="layui-btn layui-btn-xs" lay-event="chaCaoZuoMingXi">查询操作记录</a>
+    <br/>
+    <a class="layui-btn layui-btn-xs" lay-event="wuLiuCaoZuoFun">物流操作</a>
+    <br/>
+    <a class="layui-btn layui-btn-xs" lay-event="caiWuCaoZuoFun">财务操作</a>
+    
+</script>
+<!-- js -->
+<script th:src="@{/myjscss/yyfjfahuodingdan/yyfjfahuodingdan.js}"></script>
+
+<style>
+    /*//控制表格滑动*/
+    /*table tbody {
+        display: block;
+        overflow-y: scroll;
+    }*/
+
+    /*//固定表头*/
+    /*table thead {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }*/
+
+    /*//调节表头宽度*/
+    /*table thead {
+        width: calc(100% - 1em)
+    }*/
+    /*.layui-table-cell{
+        height:auto;
+        white-space:normal;
+    }*/
+    
+</style>
+
+</html>
+

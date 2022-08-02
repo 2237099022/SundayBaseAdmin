@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<!--解决idea thymeleaf 表达式模板报红波浪线-->
+<!--suppress ALL -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 引入公用部分 -->
+    <script th:replace="common/head::static"></script>
+    <!-- 样式 -->
+    <link th:href="@{/myjscss/yyfjqijiangjinyeji/css/yyfjqijiangjinyeji.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+        <div class="layui-card-body">
+            <!--<div class="layui-form toolbar">
+                <div class="layui-form-item">
+                
+                <div class="layui-inline">
+                        //左侧按钮
+                        
+                    </div>
+                    <div class="layui-inline" style="float: right">
+                        //右侧按钮
+                    </div>
+                
+                </div>
+            </div>-->
+            <!--表单-->
+            <table class="layui-hide" id="yyfjqijiangjinyeji" lay-filter="yyfjqijiangjinyeji"></table>
+        </div>
+    </div>
+</div>
+
+</body>
+<!--表单-->
+<div id="addShowDiv" style="display:none; ">
+    <form class="layui-form" lay-filter="addForm" action="" id="addForm">
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="id" id="id" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="期" id="期" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="会员编号" id="会员编号" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="会员姓名" id="会员姓名" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="会员级别" id="会员级别" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="续会状态" id="续会状态" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="复消额度累计" id="复消额度累计" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="实际重复消费累计" id="实际重复消费累计" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="新复消额度累计" id="新复消额度累计" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="新实际重复消费累计" id="新实际重复消费累计" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="实发" id="实发" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="实发2" id="实发2" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="实发3" id="实发3" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="直推奖" id="直推奖" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="薪酬奖" id="薪酬奖" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="领导奖" id="领导奖" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="零售奖" id="零售奖" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="新人激励奖" id="新人激励奖" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="复消返还" id="复消返还" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="复消扣款" id="复消扣款" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="扣款池" id="扣款池" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="新复消返还" id="新复消返还" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="新复消扣款" id="新复消扣款" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="新扣款池" id="新扣款池" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-radius" lay-submit lay-filter="addSub">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-radius layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--头部按钮-->
+<script type="text/html" id="titleBar">
+    <div class="layui-inline">
+        <input class="layui-input" id="会员编号" placeholder="会员编号" type="text" style="width: 125px;"/>
+    </div>
+    <input class="chaXunNone layui-input" id="id" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="期" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="会员姓名" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="会员级别" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="续会状态" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="复消额度累计" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="实际重复消费累计" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="新复消额度累计" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="新实际重复消费累计" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="实发" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="实发2" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="实发3" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="直推奖" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="薪酬奖" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="领导奖" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="零售奖" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="新人激励奖" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="复消返还" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="复消扣款" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="扣款池" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="新复消返还" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="新复消扣款" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="新扣款池" placeholder="" type="text" style="display: none;width: 125px;"/>
+    
+    
+    <div class="layui-inline">
+        <!--<button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" lay-event="chaXunMoreF"><i class="layui-icon">&#xe624;</i>更多查询</button>
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" lay-event="chaXunLessF"><i class="layui-icon">&#xe67e;</i>隐藏查询</button>
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" lay-event="chaXunChongZhiF"><i class="layui-icon">&#x1006;</i>重置</button>-->
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" lay-event="chaXunF"><i class="layui-icon">&#xe615;</i>搜索</button>
+    </div>
+    
+</script>
+<!--行内按钮-->
+<script type="text/html" id="rowBar">
+
+</script>
+<!-- js -->
+<script th:src="@{/myjscss/yyfjqijiangjinyeji/yyfjqijiangjinyeji.js}"></script>
+
+</html>
+

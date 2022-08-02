@@ -1,0 +1,15 @@
+.layui-input{
+    border-radius:18px;
+    padding: 0 10px;
+}
+.layui-upload-drag{
+    padding: 10px;
+}
+.layui-btn{
+    border-radius:18px;
+}
+/*
+*{
+    margin: 0 !important;
+}
+*/

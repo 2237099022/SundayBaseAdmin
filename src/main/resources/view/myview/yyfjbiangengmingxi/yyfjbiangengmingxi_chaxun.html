@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--解决idea thymeleaf 表达式模板报红波浪线-->
+<!--suppress ALL -->
+<html xmlns:th="http://www.thymeleaf.org" style="height: 100%">
+<head>
+    <!-- 引入公用部分 -->
+    <script th:replace="common/head::static"></script>
+    <!-- 样式 -->
+    <link th:href="@{/myjscss/yyfjbiangengmingxi/css/yyfjbiangengmingxi.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body style="height: 98%">
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+        <div class="layui-card-body">
+            <div class="layui-form toolbar">
+
+                <div class="layui-form-item">
+
+                    <div class="layui-inline">
+                        <input class="layui-input" id="xingMing" placeholder="姓名" type="text" />
+                    </div>
+                    <div class="layui-inline">
+                        <input class="layui-input" id="bianHao" placeholder="编号" type="text" />
+                    </div>
+
+                    <!--                            -->
+                    <input class="chaXunNone layui-input" id="dianHua" placeholder="电话" type="text" style="display: none;width: 125px;"/>
+                    <input class="chaXunNone layui-input" id="shenFenZheng" placeholder="身份证" type="text" style="display: none;width: 125px;"/>
+                    <input class="chaXunNone layui-input" id="bianGengXiangId" placeholder="变更项" type="text" style="display: none;width: 125px;"/>
+                    <input class="chaXunNone layui-input" id="shuoMing" placeholder="备注" type="text" style="display: none;width: 125px;"/>
+                    <input class="chaXunNone layui-input" id="qianNeiRong" placeholder="变更后内容" type="text" style="display: none;width: 125px;"/>
+                    <input class="chaXunNone layui-input" id="houNeiRong" placeholder="变更后内容" type="text" style="display: none;width: 125px;"/>
+                    <!--<div class="layui-inline">
+                        <input id="tableType" class="layui-input" type="text" placeholder="表类型"/>
+                    </div>-->
+                    <div class="layui-inline">
+
+                        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" id="chaXunMoreF"><i class="layui-icon">&#xe624;</i>更多查询</button>
+                        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" id="chaXunLessF"><i class="layui-icon">&#xe67e;</i>隐藏查询</button>
+                        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" id="chaXunChongZhiF"><i class="layui-icon">&#x1006;</i>重置</button>
+                        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" id="chaXunF"><i class="layui-icon">&#xe615;</i>搜索</button>
+                    </div>
+                </div>
+                <!--表单-->
+                <table class="layui-hide" id="yyfjbiangengmingxi" lay-filter="yyfjbiangengmingxi"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<!--表单-->
+<div id="addShowDiv" style="display:none; ">
+    <form class="layui-form" lay-filter="addForm" action="" id="addForm">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="bianHao" id="bianHao" required  lay-verify="required" placeholder="请输入编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="xingMing" id="xingMing" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="dianHua" id="dianHua" placeholder="电话" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">身份证</label>
+            <div class="layui-input-block">
+                <input type="text" name="shenFenZheng" id="shenFenZheng" placeholder="身份证" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">来源</label>
+            <div class="layui-input-block">
+                <input value="" type="text" name="laiYuan" id="laiYuan" required  lay-verify="required" placeholder="来源" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">变更项</label>
+            <div class="layui-input-block">
+                <select id="bianGengXiangId" name="bianGengXiangId" lay-verify="required">
+                    <option value=""></option>
+                    
+                    <option value="变更姓名">变更姓名</option>
+                    <option value="变更安置人">变更安置人</option>
+                    <option value="变更推荐人">变更推荐人</option>
+                    <option value="变更级别">变更级别</option>
+                    <option value="续会状态">续会状态</option>
+                    <option value="订单调期">订单调期</option>
+                    <option value="未成年人更换">未成年人更换</option>
+                    <option value="删除">删除</option>
+                    <option value="推荐奖">推荐奖</option>
+                    <option value="薪酬奖">薪酬奖</option>
+                    <option value="业绩">业绩</option>
+                    <option value="扣除库存">扣除库存</option>
+                    <option value="发放状态">发放状态</option>
+                    <option value="升级期限">升级期限</option>
+                    
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">变更前内容</label>
+            <div class="layui-input-block">
+                <input type="text" name="qianNeiRong" id="qianNeiRong" required  lay-verify="required" placeholder="变更前内容" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">变更后内容</label>
+            <div class="layui-input-block">
+                <input type="text" name="houNeiRong" id="houNeiRong" required  lay-verify="required" placeholder="变更后内容" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">提交日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="tiJiaoTime" id="tiJiaoTime" required  lay-verify="required" placeholder="提交日期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">说明</label>
+            <div class="layui-input-block">
+                <input type="text" name="shuoMing" id="shuoMing" placeholder="说明" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">变更在第几期</label>
+            <div class="layui-input-block">
+                <input type="text" name="xiuGaiQi" id="xiuGaiQi" placeholder="如:20220501" autocomplete="off" class="layui-input" required  lay-verify="required|number|qishuverify">
+            </div>
+            <!--<div name="xiuGaiQi"  id="xiuGaiQi" class="layui-input-block xm-select-demo"></div>-->
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-radius" lay-submit lay-filter="addSub" >立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-radius layui-btn-primary" >重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--头部按钮-->
+<script type="text/html" id="titleBar">
+    <div class="layui-inline">
+        <button class="layui-btn layui-btn-radius layui-btn-normal" lay-event="addOneFun">添加修改</button>
+    </div>
+</script>
+<!--行内按钮-->
+<script type="text/html" id="rowBar">
+    <a class="layui-btn layui-btn-primary layui-border-blue layui-btn-sm layui-btn-radius" lay-event="updateOneF">修改</a>
+    <a class="layui-btn layui-btn-primary layui-border-red layui-btn-sm layui-btn-radius" lay-event="deleteOneF">删除</a>
+</script>
+<!-- js -->
+<script th:src="@{/myjscss/yyfjbiangengmingxi/yyfjbiangengmingxi_chaxun.js}"></script>
+</html>

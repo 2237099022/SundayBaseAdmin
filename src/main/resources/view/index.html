@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<!--解决idea thymeleaf 表达式模板报红波浪线-->
+<!--suppress ALL -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${sys.sysName}">XXX系统</title>
+    <link rel="shortcut icon" th:href='${sys.sysLogo}' th:mce_href='${sys.sysLogo}' type="image/x-icon">
+    <!-- 引入公用部分 -->
+    <script th:replace="common/head::static"></script>
+    <style>
+        /* 菜单鼠标放上去时，左边的提示条对不齐，直接屏蔽*/
+        .layui-nav-bar{
+            display: none;
+        }
+    </style>
+</head>
+<body class="layui-layout-body" style="background-color: #E3E3E3">
+<div class="layui-layout layui-layout-admin">
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <div class="layui-header"  th:style="${' background-color:' + sys.sysColor + ' !important;'}">
+        <div class="layui-logo"><img th:src='${sys.sysLogo}' class="layui-nav-img"/> <span th:text="${sys.sysName}"></span></div>
+        <ul class="layui-nav layui-layout-left">
+            <!-- 动态读取加载用户快捷菜单 -->
+            <li class="layui-nav-item" th:each="menu,iterStat : ${shortcutMenuList}">
+                <a th:text="${menu.shortcutMenuName}"
+                   th:data-url="${menu.shortcutMenuPath.indexOf('http') == -1 ?  menu.shortcutMenuPath : menu.shortcutMenuPath}"
+                   th:data-id="${menu.shortcutMenuId}" class="huanzi-menu" href="javascript:;">XXX菜单</a>
+                <dl class="layui-nav-child" th:if="${#lists.size(menu.children)} > 0">
+                    <th:block th:include="common/head::shortcutMenu(${menu.children})"></th:block>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <!--修改密码-->
+            <li class="layui-nav-item">
+                <a onclick="updatePassword()">修改密码</a>
+            </li>
+            <li class="layui-nav-item">
+                <a class="huanzi-menu" th:data-url=" '/user/userinfo'" data-id="userinfo" href="javascript:;">
+                    <img src="https://shop.shenglianbj.com/shopadmin/img/demo/avatars/avatar-m.png"
+                         class="layui-nav-img">
+                    <span th:text="${loginUser.userName}">XXX</span>
+                </a>
+                <!--子菜单-->
+                <!--<dl class="layui-nav-child">
+                    <dd><a class="huanzi-menu" th:data-url="${#request.getContextPath()} + '/user/userinfo'" data-id="userinfo" href="javascript:;">基本资料</a></dd>
+                    &lt;!&ndash;<dd><a class="huanzi-menu" th:data-url="${#request.getContextPath()} + '/user/shortcMenu'" data-id="shortcMenu" href="javascript:;">个性菜单</a></dd>&ndash;&gt;
+                </dl>-->
+            </li>
+            
+            <li class="layui-nav-item"><a th:href="@{/logout}">退出</a></li>
+        </ul>
+    </div>
+
+    <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+    <div class="layui-side layui-bg-black"  th:style="${' background-color:' + sys.sysColor + ' !important;'}">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree" lay-filter="test" lay-shrink="all" th:style="${' background-color:' + sys.sysColor + ' !important;'}">
+                <!-- 动态读取加载系统菜单 -->
+                <li class="layui-nav-item" th:each="menu,iterStat : ${menuList}">
+                    <a th:text="${menu.menuName}"
+                       th:data-url="${ menu.menuPath}"
+                       th:data-id="${menu.menuId}" class="huanzi-menu" href="javascript:;">XXX菜单</a>
+                    <dl class="layui-nav-child" th:if="${#lists.size(menu.children)} > 0">
+                        <th:block th:include="common/head::sysMenu(${menu.children})"></th:block>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 内容主体区域 -->
+<!--    <div class="layui-body" style="overflow-y: hidden;">-->
+<!--    修改后内容-->
+    <div class="layui-body">
+        <!--   动态选项卡   -->
+        <div class="layui-tab layui-tab-card" lay-filter="demo">
+            <!-- 标题 -->
+            <ul class="layui-tab-title"></ul>
+            <!-- 内容 -->
+            <!-- style用于取消高度滚动条bug -->
+            <div class="layui-tab-content" style="padding: 0"></div>
+        </div>
+    </div>
+    <!-- 底部固定区域 -->
+    <div class="layui-footer" th:utext="${sys.sysBottomText}">
+        © XXX系统
+    </div>
+</div>
+<script th:inline="javascript">
+    //获取后端RSA公钥并存到sessionStorage
+    sessionStorage.setItem('javaPublicKey', [[${publicKey}]]);
+
+    //获取api加密开关并存到sessionStorage
+    sessionStorage.setItem('sysApiEncrypt', [[${sys.sysApiEncrypt}]]);
+
+    //重写jq的ajax加密
+    jQueryExtend.ajaxExtend();
+
+    //可以将登录用户信息存在sessionStorage中
+    sessionStorage.setItem('loginUser',JSON.stringify([[${loginUser}]]));
+</script>
+<script>
+    layui.use('element', function () {
+        let element = layui.element;
+
+        //首页内容高度
+        //$("#indexTabContent").css("height",($(".layui-body")[0].offsetHeight - 94) + "px");
+
+        /**
+         * 左侧菜单点击事件
+         */
+        $("body").on("click", ".huanzi-menu", function (e) {
+            if($(this).next("dl").length > 0){
+                return;
+            }
+            let url = $(this).data("url");
+            let id = $(this).data("id");
+            let text = $(this).text();
+
+            //如果不存在
+            openIfreamInLayui(url,id,text)
+            element.tabChange('demo', id);
+        });
+
+        /**
+         * 监听浏览器可视高度，自适应设置高度
+         */
+        window.onresize = function (ev) {
+            let h = 94;
+            if($(".layui-show .tab-content-div")[0].nodeName === "IFRAME"){
+                h = 61;
+            }
+            $(".tab-content-div").css("height",($(".layui-body")[0].offsetHeight - h) + "px");
+        }
+
+        //layui标题上方tab选项卡中的title 删除操作
+        delTab=function (req) {
+            element.tabDelete('demo', req); //删除 lay-id="xxx" 的这一项  
+        }
+        //切换上方tab选项卡刷新
+        element.on('tab(demo)', function(data){
+            var src=$(".layui-tab-item.layui-show").find("iframe").attr("src");
+            $(".layui-tab-item.layui-show").find("iframe").attr("src",src);
+        });
+        //layui标题上方tab选项卡中的title 刷新当前页面操作
+        /*shuaXin=function (req) {
+            var src=$(".layui-tab-item.layui-show").find("iframe").attr("src");
+            $(".layui-tab-item.layui-show").find("iframe").attr("src",src);
+        }*/
+
+
+        //页面加载完成时点击第一个菜单
+        $(function(){
+            let firstCaiDan = $(".layui-side .huanzi-menu:first")
+            //如果第一个页面没有子菜单
+            let url = firstCaiDan.data("url");
+            let id = firstCaiDan.data("id");
+            let text = firstCaiDan.text();
+            //console.log(url+"-"+id+"-"+text)
+            /**
+             * 菜单点击事件
+             */
+            if(firstCaiDan.next("dl").length > 0){
+                //如果第一个页面有子菜单
+                //展开菜单
+                firstCaiDan.parent().parent().children().first().attr("class","layui-nav-item layui-nav-itemed")
+                //点击第一个子菜单
+                let firstZiCaiDan = firstCaiDan.next("dl:first").children()
+                firstZiCaiDan.first().attr("class","layui-nav-item layui-this")
+                //展示页面
+                firstCaiDan = firstZiCaiDan.children().first();
+                let url = firstCaiDan.data("url");
+                let id = firstCaiDan.data("id");
+                let text = firstCaiDan.text();
+                openIfreamInLayui(url,id,text)
+            }else{
+                firstCaiDan.parent().parent().children().first().attr("class","layui-nav-item layui-this")
+                //如果第一个页面没有子菜单
+                openIfreamInLayui(url,id,text)
+            }
+                
+            //alert("4jquery====》document onload");
+        });
+
+        openIfreamInLayui=function (url,id,text) {
+            //如果不存在
+            if ($(".layui-tab-title").find("li[lay-id='" + id + "']").length <= 0) {
+                element.tabAdd('demo', {
+                    title: text+"<i class='layui-icon layui-icon-close layui-unselect layui-tab-close' onclick='delTab(\""+id+"\")'></i>",
+                    //iframe子页面onload新增监听src为/loginPage是父页面跳转/loginPage，解决“俄罗斯套娃”问题
+                    content: "<iframe class='tab-content-div' onload='if(this.contentWindow.location.pathname == \""+ctx+"/loginPage\"){window.location.href = \""+ctx+"/loginPage\"};' width='100%' height='" + ($(".layui-body")[0].offsetHeight - 61) + "px" + "' frameborder='0' scrolling='auto' src=\"" + url + "\"></iframe>",
+                    id: id
+                });
+            }
+            element.tabChange('demo', id);
+        }
+        
+    });
+</script>
+<!-- js -->
+<script th:src="@{/user/js/userinfo.js}"></script>
+</body>
+</html>

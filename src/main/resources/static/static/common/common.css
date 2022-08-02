@@ -1,0 +1,10 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+*{
+    border-radius:13px;
+}
+.layui-layer{
+    border-radius:13px;
+}

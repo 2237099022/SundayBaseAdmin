@@ -1,0 +1,182 @@
+package cn.huanzi.qch.mycode.${entityToLowerCase}.controller;
+
+import cn.huanzi.qch.baseadmin.common.controller.CommonController;
+import cn.huanzi.qch.baseadmin.common.controller.MyCommonController;
+import cn.huanzi.qch.mycode.${moKuaiMing}.${entityToLowerCase}.pojo.${entity};
+import cn.huanzi.qch.mycode.${moKuaiMing}.${entityToLowerCase}.service.${entity}Service;
+import cn.huanzi.qch.mycode.${moKuaiMing}.${entityToLowerCase}.pojo.${entity}Vo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.PostMapping;
+import cn.huanzi.qch.baseadmin.annotation.Decrypt;
+import cn.huanzi.qch.baseadmin.annotation.Encrypt;
+import cn.huanzi.qch.baseadmin.common.pojo.PageInfo;
+import cn.huanzi.qch.baseadmin.common.pojo.Result;
+import cn.hutool.core.collection.CollStreamUtil;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.ModelAndView;
+import cn.huanzi.qch.baseadmin.annotation.Decrypt;
+import cn.huanzi.qch.baseadmin.annotation.Encrypt;
+import cn.huanzi.qch.baseadmin.common.pojo.PageInfo;
+import cn.huanzi.qch.baseadmin.common.pojo.Result;
+import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.servlet.servlet.ServletOutputStream;
+import jakarta.servlet.servlet.http.HttpServletRequest;
+import jakarta.servlet.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.*;
+import java.util.stream.Collectors;
+import cn.huanzi.qch.baseadmin.util.CopyUtil;
+
+
+
+
+/**
+ * ${tableComment} Controller
+ *
+ * ${author}
+ * ${date}
+ */
+@RestController
+@RequestMapping("/mycode/${entityToLowerCase}/")
+public class ${entity}Controller extends MyCommonController<${entity}Vo, ${entity}, ${priDataType}> {
+    @Autowired
+    private ${entity}Service ${entityFirstToLowerCase}Service;
+
+    @GetMapping("index")
+    public ModelAndView index() {
+        return new ModelAndView("myview/${moKuaiMing}/${entityToLowerCase}/${entityToLowerCase}");
+    }
+    
+        
+    @PostMapping("page")
+    @Decrypt
+    @Encrypt
+    public Result<PageInfo<${entity}Vo>> page(${entity}Vo para){
+
+        Result<PageInfo<${entity}Vo>> page = ${entityFirstToLowerCase}Service.page(para);
+
+        return page;
+        
+    }
+    
+        
+    /**
+     * 导入
+     * @return
+     */
+    @PostMapping("daoRuFun")
+    public Result daoRuDaiFaHuiXianBuJiaMi(@RequestPart("file") MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
+        
+        //文件名
+        //String wenJianMing = file.getOriginalFilename();
+        // 1.获取上传文件输入流
+        InputStream inputStream = null;
+        try {
+            inputStream = file.getInputStream();
+        } catch (IOException e) {
+            System.out.println("/mycode/${moKuaiMing}/${entityToLowerCase}/daoRuDaiFaHuiXianBuJiaMi---导入方法错误");
+            e.printStackTrace();
+        }
+        // 2.应用HUtool ExcelUtil获取ExcelReader指定输入流和sheet
+        ExcelReader excelReader = ExcelUtil.getReader(inputStream, 0);
+
+        //设置标题别名
+        #for
+        excelReader.addHeaderAlias("${tableInfo.columnComment}", "${tableInfo.columnName}");
+        #end
+        
+        // 可以加上表头验证
+        // 3.读取第二行到最后一行数据
+        List<${entity}> readAll = excelReader.read(0,0, excelReader.getRowCount(),${entity}.class);
+        
+        int hangShu=1;
+        
+        //判断数据
+        for (${entity} resone : readAll) {
+            
+            hangShu+=1;
+        }
+        
+        //int i=1/0;
+        return Result.of(readAll);
+        
+    }
+    
+    /**
+     * 导出
+     * @return
+     */
+    @RequestMapping("daoChuFun")
+        @ResponseBody
+        public void daoChuGeiWuLiu(HttpServletResponse response,Integer ziti) throws UnsupportedEncodingException {
+            
+            //excel数据
+            //查询导出待发
+            ${entity}Vo yyfjTuiHuoVo = new ${entity}Vo();
+            Result<List<${entity}Vo>> list = ${entityFirstToLowerCase}Service.list(yyfjTuiHuoVo);
+            List<${entity}Vo> daoChuAll = list.getData();
+    
+            //如果不为空则导出
+            if(daoChuAll.size()!=0){
+                //待修改L
+                List<${entity}> daiXiuGaiL = new ArrayList<>();
+    
+                //获得excelwriter对象
+                ExcelWriter writer = ExcelUtil.getWriter(true);
+                
+                //设置标题别名
+                #for
+                writer.addHeaderAlias("${tableInfo.columnName}", "${tableInfo.columnComment}");
+                #end
+    
+                //写入excel数据
+                writer.write(daoChuAll, true);
+                //设置excel列宽
+                writer.autoSizeColumnAll();
+                //返回网页下载
+                String name = StrUtil.utf8Str("导出待发货"+ DateUtil.now());
+                ServletOutputStream out= null;
+                response.setContentType("application/binary;charset=utf-8");
+    
+                response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(name+".xlsx", "utf-8"));
+    
+                try {
+                    out = response.getOutputStream();
+                    writer.flush(out, true);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+                finally {
+                    // 关闭writer，释放内存
+                    writer.close();
+                }
+                //此处记得关闭输出Servlet流
+                IoUtil.close(out);
+            }
+            
+        }
+    
+}

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!--解决idea thymeleaf 表达式模板报红波浪线-->
+<!--suppress ALL -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 引入公用部分 -->
+    <script th:replace="common/head::static"></script>
+    <!-- 样式 -->
+    <link th:href="@{/myjscss/yyfjjiesuandingdan/css/yyfjjiesuandingdan.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+        <div class="layui-card-body">
+            <div class="layui-form toolbar">
+                <div class="layui-form-item">
+                
+                <div class="layui-inline">
+                        //左侧按钮
+                        <button class="layui-btn layui-btn-radius" id="addOneFun">添加</button>
+                        <button class="layui-btn layui-btn-radius" id="daoRuFun">
+                            <i class="layui-icon layui-icon-upload"></i>导入数据
+                        </button>
+                        <button class="layui-btn layui-btn-radius" id="daoChuFun" style="margin: 10px">
+                            <i class="layui-icon layui-icon-download-circle"></i>导出
+                        </button>
+                    </div>
+                    <div class="layui-inline" style="float: right">
+                        //右侧按钮
+                    </div>
+                
+                </div>
+            </div>
+            <!--表单-->
+            <table class="layui-hide" id="yyfjjiesuandingdan" lay-filter="yyfjjiesuandingdan"></table>
+        </div>
+    </div>
+</div>
+
+</body>
+<!--表单-->
+<div id="addShowDiv" style="display:none; ">
+    <form class="layui-form" lay-filter="addForm" action="" id="addForm">
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="ddh" id="ddh" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="leiXing" id="leiXing" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="jiFen" id="jiFen" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="hyNumber" id="hyNumber" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="hyName" id="hyName" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="tj" id="tj" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="az" id="az" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="createdAt" id="createdAt" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="jsTime" id="jsTime" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="jsYue" id="jsYue" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="id" id="id" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="azShichang" id="azShichang" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <input type="text" name="zongJian" id="zongJian" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-radius" lay-submit lay-filter="addSub">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-radius layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--头部按钮-->
+<script type="text/html" id="titleBar">
+    <input class="chaXunNone layui-input" id="ddh" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="leiXing" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="jiFen" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="hyNumber" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="hyName" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="tj" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="az" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="createdAt" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="jsTime" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="jsYue" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="id" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="azShichang" placeholder="" type="text" style="display: none;width: 125px;"/>
+    <input class="chaXunNone layui-input" id="zongJian" placeholder="" type="text" style="display: none;width: 125px;"/>
+    
+    
+    <div class="layui-inline">
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" lay-event="chaXunMoreF"><i class="layui-icon">&#xe624;</i>更多查询</button>
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" lay-event="chaXunLessF"><i class="layui-icon">&#xe67e;</i>隐藏查询</button>
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" lay-event="chaXunChongZhiF"><i class="layui-icon">&#x1006;</i>重置</button>
+        <button class="layui-btn layui-btn-primary layui-border-black layui-btn-radius" lay-event="chaXunF"><i class="layui-icon">&#xe615;</i>搜索</button>
+    </div>
+    
+</script>
+<!--行内按钮-->
+<script type="text/html" id="rowBar">
+    <a class="layui-btn layui-btn-primary layui-border-blue layui-btn-sm layui-btn-radius" lay-event="updateOneF">修改</a>
+    <a class="layui-btn layui-btn-primary layui-border-red layui-btn-sm layui-btn-radius" lay-event="deleteOneF">删除</a>
+</script>
+<!-- js -->
+<script th:src="@{/myjscss/yyfjjiesuandingdan/yyfjjiesuandingdan.js}"></script>
+
+</html>
+
